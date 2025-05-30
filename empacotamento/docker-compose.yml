@@ -1,0 +1,8 @@
+services:
+  desafio-l2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: desafio-l2
+    ports:
+      - "8080:8080"

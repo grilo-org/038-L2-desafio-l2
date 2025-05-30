@@ -1,0 +1,83 @@
+USE desafio_l2;
+
+-- DEPARTMENT
+CREATE TABLE DEPARTMENT (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- TITLE
+CREATE TABLE TITLE (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- PROFESSOR
+CREATE TABLE PROFESSOR (
+    id INT PRIMARY KEY,
+    department_id INT NOT NULL,
+    title_id INT NOT NULL,
+    FOREIGN KEY (department_id) REFERENCES DEPARTMENT(id),
+    FOREIGN KEY (title_id) REFERENCES TITLE(id)
+);
+
+-- BUILDING
+CREATE TABLE BUILDING (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- ROOM
+CREATE TABLE ROOM (
+    id INT PRIMARY KEY,
+    building_id INT NOT NULL,
+    FOREIGN KEY (building_id) REFERENCES BUILDING(id)
+);
+
+-- SUBJECT
+CREATE TABLE SUBJECT (
+    id INT PRIMARY KEY,
+    subject_id INT,
+    code VARCHAR(20) NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+
+-- PROFESSOR_SUBJECT
+CREATE TABLE PROFESSOR_SUBJECT (
+    id INT PRIMARY KEY,
+    professor_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    FOREIGN KEY (professor_id) REFERENCES PROFESSOR(id),
+    FOREIGN KEY (subject_id) REFERENCES SUBJECT(id)
+);
+
+-- SUBJECT_PREREQUISITE
+CREATE TABLE SUBJECT_PREREQUISITE (
+    id INT PRIMARY KEY,
+    subject_id INT NOT NULL,
+    prerequisiteid INT NOT NULL,
+    FOREIGN KEY (subject_id) REFERENCES SUBJECT(id),
+    FOREIGN KEY (prerequisiteid) REFERENCES SUBJECT(id)
+);
+
+-- CLASS
+CREATE TABLE CLASS (
+    id INT PRIMARY KEY,
+    subject_id INT NOT NULL,
+    year INT NOT NULL,
+    semester INT NOT NULL,
+    code VARCHAR(10) NOT NULL,
+    FOREIGN KEY (subject_id) REFERENCES SUBJECT(id)
+);
+
+-- CLASS_SCHEDULE
+CREATE TABLE CLASS_SCHEDULE (
+    id INT PRIMARY KEY,
+    class_id INT NOT NULL,
+    room_id INT NOT NULL,
+    day_of_week VARCHAR(20) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES CLASS(id),
+    FOREIGN KEY (room_id) REFERENCES ROOM(id)
+);
